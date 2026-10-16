@@ -1,4 +1,13 @@
-from fastapi import FastAPI, Form, File, APIRouter, Depends, HTTPException, UploadFile
+from fastapi import (
+    FastAPI,
+    Form,
+    File,
+    APIRouter,
+    Depends,
+    HTTPException,
+    UploadFile,
+    Path,
+)
 from fastapi.security import OAuth2
 from sqlalchemy.orm import Session
 from database.db import get_db
@@ -48,7 +57,7 @@ def add_post(
 ## Delte a post
 @router.delete("/deletepost{id}")
 def delete_post(
-    id: int,
+    id: int = Path(...),
     current_user: DbUser = Depends(get_current_user),
     db: Session = Depends(get_db),
 ):

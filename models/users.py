@@ -28,3 +28,16 @@ class DbPost(Base):
     )
     user_id = Column(Integer, ForeignKey("Users.id"))
     user = relationship("DbUser", back_populates="items")
+    comment = relationship("Dbcomment", back_populates="post")
+
+
+class Dbcomment(Base):
+    __tablename__ = "comment"
+    id = Column(Integer, primary_key=True, index=True)
+    text = Column(String)
+    username = Column(String)
+    create_at = Column(
+        DateTime(timezone=True), default=lambda: datetime.now(timezone.utc)
+    )
+    post_id = Column(Integer, ForeignKey("Posts.id"))
+    post = relationship("DbPost", back_populates="comment")
